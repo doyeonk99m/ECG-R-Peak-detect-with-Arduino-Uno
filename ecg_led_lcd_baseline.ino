@@ -13,7 +13,6 @@ int R_peak = 0;
 int measuring = 0;
 double heartrate = 0;
 float timing[100];
-int sec = 0;
 
 void setup()
 {
@@ -51,53 +50,17 @@ void loop()
   {
     R_peak = 0;
     measuring += 1;
+    timing[measuring] = millis();
   }
-
-  sec = 1000*millis();
   
-  heartrate = (measuring * 60) / sec;
+  heartrate = 1/(60000*(timing[measuring] - timing[measuring-1]));
   
   lcd.setCursor(0,0);
-  lcd.print("Heart rate is");
+  lcd.print("#Heart beat ");
   lcd.setCursor(0,1);
  
-  lcd.print(heartrate);
+  lcd.print(measuring);
   
   lcd.setCursor(10,1);
-  lcd.print("bpm");
-
-  /*if(millis() < 60000) 
-  {
-    
-  lcd.setCursor(0,0);
-  lcd.print("measuring ...");
-  lcd.setCursor(10,0);
-  
-  }
-
-  lcd.setCursor(0,1);
-  lcd.print(measuring);
-
-  
- if(millis() == 60000)
-   { 
-    lcd.setCursor(0,0);
-    lcd.clear();
-   }
-  
-  if(millis() > 60000)
-  
-  {
-    
-    lcd.setCursor(0,0);
-    lcd.print("Heartrate is ");
-    
-    lcd.setCursor(0,1);
-    lcd.print(heartrate);
-    
-    lcd.setCursor(6,1);
-    lcd.print("bpm ");
-    
-  }*/
-  
+  lcd.print("count");
 }
